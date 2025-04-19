@@ -1,15 +1,11 @@
 import * as vscode from 'vscode';
+import { generateLogPoint } from './logPointGenerator';
 
 export function registerChatParticipant(context: vscode.ExtensionContext) {
     const handler: vscode.ChatRequestHandler = async (request: vscode.ChatRequest, chatContext: vscode.ChatContext, stream: vscode.ChatResponseStream, token: vscode.CancellationToken) => {
 
         const fileRef = request.references[0].value as {uri: vscode.Uri; range: vscode.Range};
-        const breakpoint = new vscode.SourceBreakpoint(
-            new vscode.Location(fileRef.uri, fileRef.range),
-            true, undefined, undefined, 'I am a log message'
-        );
-        vscode.debug.addBreakpoints([breakpoint]);
-
+        await generateLogPoint(fileRef.uri.toString(), fileRef.range.start.line + 1);
         stream.markdown('Logpoint added!');
     };
 

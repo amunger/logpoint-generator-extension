@@ -64,6 +64,12 @@
           ]
         }
       }
+    ],
+    "chatParticipants": [
+      {
+        "id": "logpoint-generator",
+        "name": "logpoint-generator"
+      }
     ]
   },
   "scripts": {

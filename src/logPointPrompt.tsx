@@ -8,7 +8,7 @@ export interface LogPointProps extends BasePromptElementProps {
 
 export class LogPointPrompt extends PromptElement<LogPointProps, void> {
     render() {
-        const doc = workspace.textDocuments.find(doc => doc.uri.fsPath === this.props.filepath);
+        const doc = workspace.textDocuments.find(doc => doc.uri.toString() === this.props.filepath);
         const line = doc?.lineAt(this.props.lineNumber - 1);
         const lineText = line ? line.text : '';
         const language = <>{doc?.languageId ? `The language of the file is ${doc.languageId}.` : ''}<br /></>;
@@ -27,14 +27,15 @@ export class LogPointPrompt extends PromptElement<LogPointProps, void> {
                 - Variables should be added like so: {variableDescription}". <br />
                 - {language}
                 - The code at the line is: <br />
-                ```
-                {lineText}
-                ```                
+                ``` <br />
+                {lineText} <br />
+                ``` <br />         
                 <UserMessage priority={100}> 
-                    - The surrounding code is: <br />
-                    ```
-                    {surroundingText}
-                    ```
+                    <br />
+                    - The file content around that line is: <br />
+                    ``` <br />
+                    {surroundingText} <br />
+                    ``` <br />
                 </UserMessage>
             </UserMessage>
         );
