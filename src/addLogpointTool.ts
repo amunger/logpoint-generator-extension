@@ -3,9 +3,14 @@ import * as vscode from 'vscode';
 export class AddLogPointTool implements vscode.LanguageModelTool<IAddLogPointToolParams> {
 	public static toolName = 'logpoint_generator_add_logpoint';
 
-	constructor(
+	public get name() {
+		return AddLogPointTool.toolName;
+	}
+	public get description() {
+		return 'Adds a logpoint to the specified file at the given line and column number with the provided log message.';
+	}
 
-	) { }
+	constructor() { }
 
 	async invoke(options: vscode.LanguageModelToolInvocationOptions<IAddLogPointToolParams>, token?: vscode.CancellationToken) {
 		const { filePath, lineNumber, columnNumber, logMessage } = options.input;
