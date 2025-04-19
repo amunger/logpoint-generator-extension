@@ -21,8 +21,7 @@ export class LogPointPrompt extends PromptElement<LogPointProps, void> {
                 - Use the logpoint_generator_add_logpoint tool to generate a useful logpoint in {this.props.filepath} at line {this.props.lineNumber}.<br />
                 - The log point should be added to the file at the specified line number. <br />
                 - The logpoint message should be a string that is useful for debugging. <br />
-                - The logpoint message should start with either a notable characteristic of the line, or use the line number, as in "Hit line n -". <br />
-                - A notable characteristic of the line is a unique or interesting aspect of the line that stands out, like calling a function. <br />
+                - The logpoint message should start with a formatted line number (e.g. L45) and describe the line shortly in plain english. <br />
                 - Include parameters or variables used on the line as long as they have already been initialized. <br />
                 - Variables should be added like so: {variableDescription}". <br />
                 - {language}

@@ -21,7 +21,7 @@ export class AddLogPointTool implements vscode.LanguageModelTool<IAddLogPointToo
 
 		const position = new vscode.Position(lineNumber - 1, columnNumber ?? 0);
 		const breakpoint = new vscode.SourceBreakpoint(
-			new vscode.Location(vscode.Uri.file(filePath), new vscode.Range(position, position)),
+			new vscode.Location(vscode.Uri.parse(filePath), new vscode.Range(position, position)),
 			true, undefined, undefined, logMessage
 		);
 		vscode.debug.addBreakpoints([breakpoint]);

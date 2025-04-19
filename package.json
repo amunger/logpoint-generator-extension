@@ -18,7 +18,20 @@
         "title": "Generate Logpoint"
       }
     ],
+    "keybindings": [
+      {
+        "command": "logpoint-generator.generateLogpoint",
+        "key": "shift+alt+f9",
+        "when": "editorTextFocus"
+      }
+    ],
     "menus": {
+      "commandPalette": [
+        {
+          "command": "logpoint-generator.generateLogpoint",
+          "when": "editorTextFocus"
+        }
+      ],
       "editor/lineNumber/context": [
         {
           "command": "logpoint-generator.generateLogpoint",
