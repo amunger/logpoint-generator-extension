@@ -6,7 +6,8 @@ import { AddLogPointTool } from './addLogpointTool';
 export function activate(context: vscode.ExtensionContext) {
 	registerCommands(context);
 	vscode.lm.registerTool(AddLogPointTool.toolName, new AddLogPointTool());
-	registerChatParticipant(context);
+
+	//registerChatParticipant(context); not currently working, but still useful to see the prompt in the debug log.
 }
 
 export function deactivate() { }
