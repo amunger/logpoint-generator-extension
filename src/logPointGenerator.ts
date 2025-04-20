@@ -4,9 +4,9 @@ import { AddLogPointTool, IAddLogPointToolParams } from './addLogpointTool';
 import { LogPointPrompt } from './logPointPrompt';
 
 export async function generateLogPoint(filepath: string, lineNumber: number, chatModel: vscode.LanguageModelChat) {
-    const tool = vscode.lm.tools.find(tool => tool.name === AddLogPointTool.toolName) as AddLogPointTool | undefined;
+    const registeredTool = vscode.lm.tools.find(tool => tool.name === AddLogPointTool.toolName) as AddLogPointTool | undefined;
 
-    if (!tool) {
+    if (!registeredTool) {
         console.error(`Tool ${AddLogPointTool.toolName} not found`);
         return;
     }
@@ -22,32 +22,45 @@ export async function generateLogPoint(filepath: string, lineNumber: number, cha
         },
         chatModel);
 
-    const responsePromise = chatModel.sendRequest(
-        result.messages,
-        {
-            tools: [tool]
-        }
-    );
-
     try {
-        const logPointTool = new AddLogPointTool();
-        const response = await responsePromise;
         let responseStr = '';
-        for await (const part of response.stream) {
-            if (part instanceof vscode.LanguageModelTextPart) {
-                responseStr += part.value;
-            } else if (part instanceof vscode.LanguageModelToolCallPart) {
-                if (part.name !== logPointTool.name) {
-                    console.error(`Unexpected tool call: ${part.name}`);
-                }
+        const progressOptions = { location: vscode.ProgressLocation.Notification, title: "Generating message for logpoint..." };
 
-                await logPointTool.invoke({
-                    toolInvocationToken: undefined,
-                    input: part.input as IAddLogPointToolParams,
-                }, new vscode.CancellationTokenSource().token);
+        await vscode.window.withProgress(progressOptions, async (progress, token) => {
+            token.onCancellationRequested(() => {
+                console.log("User canceled the operation.");
+            });
+
+            const response = await chatModel.sendRequest(
+                result.messages,
+                {
+                    tools: [registeredTool]
+                },
+                token
+            );
+
+            const toolInstance = new AddLogPointTool();
+            let toolResult: vscode.LanguageModelToolResult | undefined;
+
+            for await (const part of response.stream) {
+                if (part instanceof vscode.LanguageModelTextPart) {
+                    responseStr += part.value;
+                    progress.report({ message: "Creating log point with message..." });
+                } else if (part instanceof vscode.LanguageModelToolCallPart) {
+                    if (part.name !== toolInstance.name) {
+                        console.error(`Unexpected tool call: ${part.name}`);
+                    }
+
+                    toolResult = await toolInstance.invoke({
+                        toolInvocationToken: undefined,
+                        input: part.input as IAddLogPointToolParams,
+                    }, token);
+                }
             }
-        }
-        console.log("Chat Response:", responseStr);
+            if (!toolResult && responseStr) {
+                console.warn('Got text response instead of tool result from chat model:', responseStr);
+            }
+        });
     } catch (error) {
         console.error("Error occurred while processing response:", error);
     }
