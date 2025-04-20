@@ -1,11 +1,11 @@
 
 import * as vscode from 'vscode';
-import { AddLogPointTool } from './addLogpointTool';
 import { generateLogPoint } from './logPointGenerator';
+import { ModelSelector } from './modelSelector';
 
 export async function registerCommands(context: vscode.ExtensionContext) {
 
-    const logPointTool = new AddLogPointTool();
+    const modelSelector = new ModelSelector();
 
     context.subscriptions.push(
         vscode.commands.registerCommand('logpoint-generator.generateLogpoint', async (args: any) => {
@@ -22,7 +22,12 @@ export async function registerCommands(context: vscode.ExtensionContext) {
                 return;
             }
 
-            await generateLogPoint(filepath, lineNumber);
+            const model = await modelSelector.getModel();
+            if (!model) {
+                vscode.window.showErrorMessage('No language model selected.');
+                return;
+            }
+            await generateLogPoint(filepath, lineNumber, model);
         })
     );
 }

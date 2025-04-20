@@ -1,6 +1,6 @@
 {
   "name": "logpoint-generator",
-  "displayName": "logpoint generator",
+  "displayName": "Logpoint Generator",
   "publisher": "amunger",
   "description": "",
   "version": "0.0.1",
@@ -17,6 +17,17 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Logpoint Generator",
+      "type": "object",
+      "properties": {
+        "logpoint-generator.modelId": {
+          "type": "string",
+          "default": "gpt-4o-mini",
+          "description": "The ID of the language model that is used to generate the log message."
+        }
+      }
+    },
     "commands": [
       {
         "command": "logpoint-generator.generateLogpoint",
@@ -38,6 +49,12 @@
         }
       ],
       "editor/lineNumber/context": [
+        {
+          "command": "logpoint-generator.generateLogpoint",
+          "group": "1_logpoint_generator"
+        }
+      ],
+      "editor/context": [
         {
           "command": "logpoint-generator.generateLogpoint",
           "group": "1_logpoint_generator"
@@ -64,10 +81,6 @@
             },
             "lineNumber": {
               "description": "The 1-based line number on which to add the log point. The line should contain executable code and needs to be after any variable referenced in the log message",
-              "type": "number"
-            },
-            "columnNumber": {
-              "description": "The column number on which to add the log point for an inline breakpoint.",
               "type": "number"
             },
             "logMessage": {
