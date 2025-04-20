@@ -8,7 +8,7 @@ Quickly create logpoints with meaningful messages to help troubleshoot your code
 
 The `Generate Logpoint` command can be used from the gutter context menu or calling the command directly while focused in the editor, and a logpoint should be added on that line with a relevant message.
 
-<video src="assets/generateLogPoint.mp4" title="Video that shows generating a logtpoint with the keyboard shortcut." autoplay loop controls muted></video>
+<img src=https://raw.githubusercontent.com/amunger/logpoint-generator-extension/main/assets/generateLogPoint.gif>
 
 #### Chat/Agent tool
 
@@ -25,6 +25,10 @@ The `logpoint_generator_add_logpoint` is registered to be used by chat participa
 This extension will send requests to a chat model provided by other extensions, such as Copilot.
 
 ## Release Notes
+
+### 1.0.1
+
+- Update readme
 
 ### 1.0.0
 
