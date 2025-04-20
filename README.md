@@ -16,6 +16,8 @@ The `logpoint_generator_add_logpoint` is registered to be used by chat participa
 
 ## Extension Settings
 
+- `logpoint-generator.modelId` - Set the model to use for logpoint message generation.
+
 ## Requirements
 
 ### Chat Language Model Available

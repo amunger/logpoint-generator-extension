@@ -24,7 +24,7 @@
         "logpoint-generator.modelId": {
           "type": "string",
           "default": "gpt-4o-mini",
-          "description": "The ID of the language model that is used to generate the log message."
+          "description": "The ID of the language model that is used to generate the log message. If the selected model is unavailable, a quickpick will be shown with available models."
         }
       }
     },
