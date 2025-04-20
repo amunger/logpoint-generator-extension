@@ -1,8 +1,10 @@
 {
   "name": "logpoint-generator",
   "displayName": "logpoint generator",
+  "publisher": "amunger",
   "description": "",
   "version": "0.0.1",
+  "icon": "assets/icon.png",
   "engines": {
     "vscode": "^1.99.0"
   },
@@ -48,7 +50,7 @@
         "tags": [
           "debugging"
         ],
-        "icon": "$(files)",
+        "icon": "$(debug-breakpoint-log)",
         "canBeReferencedInPrompt": true,
         "inputSchema": {
           "type": "object",
