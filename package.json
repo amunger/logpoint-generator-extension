@@ -5,6 +5,9 @@
   "description": "",
   "version": "0.0.1",
   "icon": "assets/icon.png",
+  "repository": {
+    "url": "https://github.com/amunger/logpoint-generator-extension"
+  },
   "engines": {
     "vscode": "^1.99.0"
   },
