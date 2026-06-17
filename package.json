@@ -2,14 +2,14 @@
   "name": "logpoint-generator",
   "displayName": "Logpoint Generator",
   "publisher": "amunger",
-  "description": "",
-  "version": "1.0.1",
+  "description": "A VS Code extension that generates log point messages for the debugger.",
+  "version": "1.0.3",
   "icon": "assets/icon.png",
   "repository": {
     "url": "https://github.com/amunger/logpoint-generator-extension"
   },
   "engines": {
-    "vscode": "^1.99.0"
+    "vscode": "^1.120.0"
   },
   "categories": [
     "Other"
